@@ -1,0 +1,201 @@
+/* import fonts */
+
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  overflow-x: hidden; /* Prevent horizontal scroll on body */
+}
+
+nav {
+  background-color: #fff;
+  color: #0056b3;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav a {
+  font-family: "Mulish", sans-serif;
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav .hamburger {
+  display: none;
+}
+
+.logo-container a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: x-large;
+  font-family: "Mulish", sans-serif;
+}
+
+.logo-container a:hover {
+  text-decoration: none;
+}
+
+main {
+  padding: 20px;
+}
+
+.task-columns {
+  display: flex;
+  gap: 20px;
+  min-width: 800px; /* Set a minimum width */
+  min-height: 600px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.column {
+  flex: 1;
+  padding: 10px;
+  border: 2px dashed transparent; /* Add border to indicate droppable area */
+  transition: border-color 0.3s ease;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+}
+
+.column h3 {
+  text-align: left;
+  color: #000;
+  margin-top: 0;
+  font-family: "Mulish", sans-serif;
+}
+
+.task-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1s ease-in-out, bounceIn 0.5s ease-out;
+  cursor: grab; /* Indicate draggable element */
+}
+
+.task-card:active {
+  cursor: grabbing; /* Indicate active drag */
+}
+
+.task-card h3 {
+  margin-top: 0;
+}
+
+.task-card p {
+  margin: 10px 0;
+}
+
+.task-card:hover {
+  box-shadow: none;
+  background-color: #d6d6d6;
+  -webkit-transition: background-color 400ms linear;
+  -ms-transition: background-color 400ms linear;
+  transition: background-color 400ms linear;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.completed {
+  color: green;
+}
+
+.in-progress {
+  color: orange;
+}
+
+.pending {
+  color: red;
+}
+
+.column.drag-over {
+  border-color: #007bff; /* Highlight border when dragging over */
+}
+
+footer {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom animations */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive styling */
+@media (max-width: 800px) {
+  nav {
+    padding: 15px;
+  }
+
+  nav .hamburger {
+    display: flex;
+    font-size: large;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .logo-container a {
+    font-size: medium;
+  }
+
+  .task-columns {
+    min-width: 100%;
+    flex-direction: column;
+  }
+}

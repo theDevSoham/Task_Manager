@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Management App</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/sidenav.css" />
+    <link rel="stylesheet" href="styles/add_tasks.css" />
+  </head>
+  <body>
+    <div id="sidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+        >&times;</a
+      >
+      <a href="/frontend/index.html">Home</a>
+      <a href="/frontend/add_tasks.html">Add Tasks</a>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="closeNav()"></div>
+
+    <nav>
+      <div class="logo-container">
+        <a href="/">Task Management App</a>
+      </div>
+      <ul>
+        <li><a href="/frontend/index.html">Home</a></li>
+        <li><a href="/frontend/add_tasks.html">Add Tasks</a></li>
+      </ul>
+      <button class="hamburger" onclick="openNav()">&#9776;</button>
+    </nav>
+
+    <main>
+      <!-- Task Upload Section -->
+      <section class="task-upload">
+        <h2>Add a New Task</h2>
+
+        <!-- Radio Buttons for Mode Selection -->
+        <div class="mode-selection">
+          <input
+            type="radio"
+            id="fill-form"
+            name="upload-mode"
+            value="form"
+            checked
+          />
+          <label for="fill-form" class="mode-label">Fill Form</label>
+
+          <input
+            type="radio"
+            id="upload-excel"
+            name="upload-mode"
+            value="excel"
+          />
+          <label for="upload-excel" class="mode-label">Upload Excel</label>
+        </div>
+
+        <!-- Form Section -->
+        <form
+          id="task-form"
+          action="/upload-task"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div id="form-section">
+            <div class="form-group">
+              <label for="task-title">Task Title:</label>
+              <input type="text" id="task-title" name="task-title" required />
+            </div>
+
+            <div class="form-group">
+              <label for="task-desc">Description:</label>
+              <textarea
+                id="task-desc"
+                name="task-desc"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="task-status">Status:</label>
+              <select id="task-status" name="task-status" required>
+                <option value="pending">Pending</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="excel-section" style="display: none">
+            <div class="form-group custom-file-upload">
+              <label for="excel-file">Upload Excel:</label>
+              <div class="file-input-wrapper">
+                <input
+                  type="file"
+                  id="excel-file"
+                  name="excel-file"
+                  accept=".xls,.xlsx"
+				  required
+                />
+                <span id="file-placeholder" class="file-placeholder"
+                  >Choose Excel file...</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Task Management App</p>
+    </footer>
+
+    <script src="scripts/add_tasks.js"></script>
+    <script src="scripts/sidenav.js"></script>
+  </body>
+</html>
