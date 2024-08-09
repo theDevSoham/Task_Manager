@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			})
 		}
 
-		fetch(`http://localhost:3000/api/task/${params.get("id")}`, {
+		fetch(`https://taskmanager-production-0377.up.railway.app/api/task/${params.get("id")}`, {
 			method: "GET"
 		})
 			.then(res => res.ok ? res.json() : Promise.reject("Error loading data"))
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				<!-- Task Form -->
 					<form
 						id="edit-task-form"
-						action="http://localhost:3000/api/task/${params.get("id")}"
+						action="https://taskmanager-production-0377.up.railway.app/api/task/${params.get("id")}"
 						method="PUT"
 						enctype="multipart/form-data"
 						style="display: block"

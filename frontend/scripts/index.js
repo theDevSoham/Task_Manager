@@ -35,7 +35,7 @@ function fetchTasks() {
 	const inProgresCol = document.getElementById("in-progress-column")
 	const pendingCol = document.getElementById("pending-column")
 
-	fetch("http://localhost:3000/api/tasks", {
+	fetch("https://taskmanager-production-0377.up.railway.app/api/tasks", {
 		method: "GET"
 	})
 		.then(res => res.ok ? res.json() : null)
@@ -65,7 +65,7 @@ function deleteTask(taskId, buttonInstance) {
 		confirmButtonText: 'Yes, I\'m sure'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			fetch(`http://localhost:3000/api/task/${taskId}`, {
+			fetch(`https://taskmanager-production-0377.up.railway.app/api/task/${taskId}`, {
 				method: "DELETE"
 			})
 				.then(res => res.ok ? res.json() : null)

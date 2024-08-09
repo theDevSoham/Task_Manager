@@ -9,7 +9,7 @@ config();
 
 // include cors
 const corsOption: CorsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["https://taskmanager-production-0377.up.railway.app"],
 };
 
 // initiate mongoose
