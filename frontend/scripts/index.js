@@ -50,7 +50,7 @@ function fetchTasks() {
 
 function updateTask(taskId) {
 	console.log(taskId);
-	window.location.href = `/frontend/edit_task.html?id=${taskId}`;
+	window.location.href = `/edit_task.html?id=${taskId}`;
 }
 
 function deleteTask(taskId, buttonInstance) {

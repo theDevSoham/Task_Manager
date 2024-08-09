@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					icon: 'success',
 					confirmButtonText: 'Go to home'
 				}).then((result) => {
-					if (result.isConfirmed) window.location.href = "/frontend/index.html"
+					if (result.isConfirmed) window.location.href = "/"
 				})
 			})
 			.catch(error => {
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					icon: 'success',
 					confirmButtonText: 'Go to home'
 				}).then((result) => {
-					if (result.isConfirmed) window.location.href = "/frontend/index.html"
+					if (result.isConfirmed) window.location.href = "/"
 				})
 			})
 			.catch(error => {
