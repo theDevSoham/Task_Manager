@@ -6,6 +6,7 @@
     <title>Task Management App</title>
     <link rel="stylesheet" href="styles/index.css" />
     <link rel="stylesheet" href="styles/sidenav.css" />
+    <link rel="stylesheet" href="styles/add_tasks.css" />
   </head>
   <body>
     <div id="sidenav" class="sidenav">
@@ -30,18 +31,10 @@
     </nav>
 
     <main>
-      <section class="task-columns">
-        <div class="column" id="completed-column">
-          <h3>Completed</h3>
-        </div>
+      <!-- Task Upload Section -->
+      <section class="task-upload" id="edit-task-section">
+        <h2>Edit Task</h2>
 
-        <div class="column" id="in-progress-column">
-          <h3>In Progress</h3>
-        </div>
-
-        <div class="column" id="pending-column">
-          <h3>Pending</h3>
-        </div>
       </section>
     </main>
 
@@ -49,8 +42,8 @@
       <p>&copy; 2024 Task Management App</p>
     </footer>
 
-    <script src="scripts/index.js"></script>
+    <script src="scripts/edit_tasks.js"></script>
     <script src="scripts/sidenav.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

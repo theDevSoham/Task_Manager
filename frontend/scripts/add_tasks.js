@@ -38,15 +38,26 @@ document.addEventListener('DOMContentLoaded', function () {
 			method: 'POST',
 			body: formData
 		})
-			.then(response => response.json()) // or response.json() if your API returns JSON
+			.then(response => response.json())
 			.then(result => {
 				console.log('Success:', result);
-				alert('Task form data submitted successfully!');
-				window.location.href = "/frontend/index.html"
+				Swal.fire({
+					title: 'Success!',
+					text: 'Task form data submitted successully',
+					icon: 'success',
+					confirmButtonText: 'Go to home'
+				}).then((result) => {
+					if (result.isConfirmed) window.location.href = "/frontend/index.html"
+				})
 			})
 			.catch(error => {
 				console.error('Error:', error);
-				alert('An error occurred while submitting the form.');
+				Swal.fire({
+					title: 'Error!',
+					text: 'An error occurred while submitting the form. Do you want to continue',
+					icon: 'error',
+					confirmButtonText: 'Cool'
+				})
 			});
 	});
 });
