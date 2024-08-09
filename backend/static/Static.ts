@@ -3,3 +3,9 @@ export const statusObject: { [key: string]: string } = {
   "in-progress": "In Progress",
   completed: "Completed",
 };
+
+export type JsonFromExcelType = {
+  Title: string;
+  Description: string;
+  Status: "pending" | "in-progress" | "completed";
+};

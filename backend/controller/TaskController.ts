@@ -1,7 +1,10 @@
 import { Router } from "express";
+import fs from "node:fs";
 import multer from "multer";
+import * as xlsx from "xlsx";
 import Task from "../models/TaskModel";
-import { statusObject } from "../static/Static";
+import { JsonFromExcelType, statusObject } from "../static/Static";
+import { createTasks } from "../static/helpers/Tasks";
 
 const TaskRouter = Router();
 
@@ -53,19 +56,66 @@ TaskRouter.post("/tasks", uploads.none(), async (req, res) => {
   }
 
   try {
-    const task = new Task({
-      title: taskTitle,
-      description: taskDesc,
-      status: statusObject[taskStatus as string],
-    });
-
-    const newTask = await task.save();
-    res.status(200).json({ message: "New task created", id: newTask._id });
+    const newIds = await createTasks([
+      { taskTitle, taskDesc, taskStatus: taskStatus as string },
+    ]);
+    res.status(200).json({ message: "New task created", id: newIds });
   } catch (error) {
     console.error("Error creating new task: ", error);
     res.status(500).json({ message: "Unexpected failure on server side" });
   }
 });
+
+TaskRouter.post(
+  "/tasks/upload",
+  uploads.single("excel-file"),
+  async (req, res) => {
+    if (!req.file) {
+      res
+        .status(400)
+        .json({ message: "Cannot upload empty. File is required" });
+    }
+
+    try {
+      const pathToFile: string = req.file?.path as string;
+      console.log("Path to file: ", pathToFile);
+
+      const workbook = xlsx.readFile(pathToFile);
+
+      // Assuming data is in first sheet
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert sheet data to JSON
+      const jsonData: JsonFromExcelType[] = xlsx.utils.sheet_to_json(worksheet);
+
+      // Delete the file after processing
+      fs.unlinkSync(pathToFile);
+
+      console.log("Extracted json: ", jsonData);
+
+      const newIds = await createTasks(
+        jsonData.map((task) => ({
+          taskTitle: task["Title"],
+          taskDesc: task["Description"],
+          taskStatus: task["Status"],
+        }))
+      );
+      res.status(200).json({ message: "New tasks created from excel sheet", id: newIds });
+
+      res
+        .status(200)
+        .json({ message: "Successfully created tasks from excel file" });
+    } catch (error) {
+      console.error("Error occured during upload: ", error);
+      res
+        .status(500)
+        .send({ message: "Unexpected error occured while parsing file" });
+    }
+
+    res.status(404);
+  }
+);
 
 TaskRouter.put("/task/:id", uploads.none(), async (req, res) => {
   const taskId = req.params.id; // Extract the task _id from the URL
