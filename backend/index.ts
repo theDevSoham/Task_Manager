@@ -1,11 +1,16 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import path from "node:path";
 import mongoose from "mongoose";
+import cors, { CorsOptions } from "cors";
 import TaskRouter from "./controller/TaskController";
 
 // configures dotenv to work in your application
 config();
+
+// include cors
+const corsOption: CorsOptions = {
+  origin: ["http://localhost:3000"],
+};
 
 // initiate mongoose
 mongoose.connect(process.env.MONGODB_URI as string);
@@ -21,20 +26,20 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
+const PORT = process.env.PORT;
+
 // initiate app
 const app = express();
 
-// to use json in body
 app.use(express.json());
-
-const PORT = process.env.PORT;
+app.use(cors(corsOption));
 
 // all routers
-app.use("/api/tasks", TaskRouter);
+app.use("/api", TaskRouter);
 
 // Default redirect
 app.get("/", (req: Request, res: Response) => {
-  res.redirect("/api/tasks/home");
+  res.send("Ping successful");
 });
 
 app

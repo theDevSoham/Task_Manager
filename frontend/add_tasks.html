@@ -55,54 +55,69 @@
           <label for="upload-excel" class="mode-label">Upload Excel</label>
         </div>
 
-        <!-- Form Section -->
+        <!-- Task Form -->
         <form
           id="task-form"
-          action="/upload-task"
+          action="http://localhost:3000/api/tasks"
           method="POST"
           enctype="multipart/form-data"
+          style="display: block"
         >
-          <div id="form-section">
-            <div class="form-group">
-              <label for="task-title">Task Title:</label>
-              <input type="text" id="task-title" name="task-title" required />
-            </div>
-
-            <div class="form-group">
-              <label for="task-desc">Description:</label>
-              <textarea
-                id="task-desc"
-                name="task-desc"
-                rows="4"
-                required
-              ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="task-status">Status:</label>
-              <select id="task-status" name="task-status" required>
-                <option value="pending">Pending</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="task-title">Task Title:</label>
+            <input
+              type="text"
+              placeholder="Enter title of task"
+              id="task-title"
+              name="task-title"
+              required
+            />
           </div>
 
-          <div id="excel-section" style="display: none">
-            <div class="form-group custom-file-upload">
-              <label for="excel-file">Upload Excel:</label>
-              <div class="file-input-wrapper">
-                <input
-                  type="file"
-                  id="excel-file"
-                  name="excel-file"
-                  accept=".xls,.xlsx"
-				  required
-                />
-                <span id="file-placeholder" class="file-placeholder"
-                  >Choose Excel file...</span
-                >
-              </div>
+          <div class="form-group">
+            <label for="task-desc">Description:</label>
+            <textarea
+              id="task-desc"
+              placeholder="A slight description..."
+              name="task-desc"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="task-status">Status:</label>
+            <select id="task-status" name="task-status" required>
+              <option value="pending" selected>Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+
+        <!-- Excel Upload Form -->
+        <form
+          id="excel-form"
+          action="/upload-excel"
+          method="POST"
+          enctype="multipart/form-data"
+          style="display: none"
+        >
+          <div class="form-group custom-file-upload">
+            <label for="excel-file">Upload Excel:</label>
+            <div class="file-input-wrapper">
+              <input
+                type="file"
+                id="excel-file"
+                name="excel-file"
+                accept=".xls,.xlsx"
+                required
+              />
+              <span id="file-placeholder" class="file-placeholder"
+                >Choose Excel file...</span
+              >
             </div>
           </div>
 

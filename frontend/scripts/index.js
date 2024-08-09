@@ -1,68 +1,52 @@
 document.addEventListener('DOMContentLoaded', function () {
-	const taskCards = document.querySelectorAll('.task-card');
-	const columns = document.querySelectorAll('.column');
+	function fetchTasks() {
+		const completedCol = document.getElementById("completed-column")
+		const inProgresCol = document.getElementById("in-progress-column")
+		const pendingCol = document.getElementById("pending-column")
 
-	taskCards.forEach(card => {
-		card.addEventListener('dragstart', handleDragStart);
-		card.addEventListener('dragend', handleDragEnd);
-	});
-
-	columns.forEach(column => {
-		column.addEventListener('dragover', handleDragOver);
-		column.addEventListener('dragenter', handleDragEnter);
-		column.addEventListener('dragleave', handleDragLeave);
-		column.addEventListener('drop', handleDrop);
-	});
-
-	function handleDragStart(e) {
-		e.dataTransfer.setData('text/plain', e.target.dataset.status);
-		e.dataTransfer.setData('text/html', e.target.outerHTML);
-		this.classList.add('dragging');
+		fetch("http://localhost:3000/api/tasks", {
+			method: "GET"
+		})
+			.then(res => res.ok ? res.json() : null)
+			.then(res => {
+				console.log("Received response: ", res)
+				renderTaskList(res.completed, completedCol)
+				renderTaskList(res.inProgress, inProgresCol)
+				renderTaskList(res.pending, pendingCol)
+			})
 	}
 
-	function handleDragEnd() {
-		this.classList.remove('dragging');
-	}
+	function renderTaskList(arrayOfTasks = [], targetElement) {
 
-	function handleDragOver(e) {
-		e.preventDefault();
-	}
+		if (arrayOfTasks.length > 0) {
 
-	function handleDragEnter() {
-		this.classList.add('drag-over');
-	}
+			let output = ``
 
-	function handleDragLeave() {
-		this.classList.remove('drag-over');
-	}
+			arrayOfTasks.forEach((task, index) => {
+				output += `
+				<article class="task-card" data-status="${task.status.split(" ").join("-").toLowerCase()}">
+					<header>
+						<h3>${task.title}</h3>
+						<div>
+							<button>&#x270E;</button>
+							<button class="danger">&#128465;</button>
+						</div>
+					</header
+					<p>${task.description.length > 20 ? `${task.description.slice(0, 21)}...` : task.description}</p>
+					<p class="status ${task.status.split(" ").join("-").toLowerCase()}">Status: ${task.status.charAt(0).toUpperCase() + task.status.slice(1)}</p>
+				</article>
+			`
+			})
 
-	function handleDrop(e) {
-		e.preventDefault();
-		const status = e.dataTransfer.getData('text/plain');
-		const html = e.dataTransfer.getData('text/html');
-		const dropTarget = e.target.closest('.column');
-
-		if (dropTarget && dropTarget.id !== `${status}-column`) {
-			const draggedElement = document.querySelector(`[data-status="${status}"].dragging`);
-			if (draggedElement) {
-				draggedElement.remove();
-				dropTarget.insertAdjacentHTML('beforeend', html);
-				const newCard = dropTarget.querySelector('.task-card:last-child');
-				newCard.dataset.status = dropTarget.id.split('-')[0];
-				newCard.classList.remove('dragging');
-				newCard.querySelector('.status').textContent = `Status: ${newCard.dataset.status.charAt(0).toUpperCase() + newCard.dataset.status.slice(1)}`;
-
-				if (dropTarget.id.split('-')[1] === "progress") {
-					newCard.querySelector('.status').textContent += `-${dropTarget.id.split('-')[1]}`
-				}
-				newCard.classList.remove(status);
-				newCard.classList.add(newCard.dataset.status);
-
-				// Re-add event listeners
-				newCard.addEventListener('dragstart', handleDragStart);
-				newCard.addEventListener('dragend', handleDragEnd);
-			}
+			targetElement.innerHTML += output
+		} else {
+			targetElement.innerHTML += `
+				<div class="no-task">
+					<p>No Task list asigned!</p>
+				</div>
+			`
 		}
-		this.classList.remove('drag-over');
 	}
+
+	fetchTasks()
 });

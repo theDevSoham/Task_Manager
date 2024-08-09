@@ -1,6 +1,6 @@
 input,
 textarea {
-  box-sizing: border-box;
+  box-sizing: border-box !important
 }
 
 /* Task Upload Section Styles */

@@ -63,6 +63,7 @@ nav .hamburger {
 
 main {
   padding: 20px;
+  margin-bottom: 5rem;
 }
 
 .task-columns {
@@ -89,6 +90,20 @@ main {
   font-family: "Mulish", sans-serif;
 }
 
+.no-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px;
+}
+
+.no-task p {
+  font-size: large;
+  color: #898989;
+  font-family: "Mulish", sans-serif;
+}
+
 .task-card {
   background-color: white;
   padding: 20px;
@@ -104,8 +119,35 @@ main {
   cursor: grabbing; /* Indicate active drag */
 }
 
-.task-card h3 {
-  margin-top: 0;
+.task-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.task-card header h3 {
+  margin: 0;
+}
+
+.task-card header div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.task-card header div button {
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.task-card header div .danger {
+  color: red;
+  border: 1px solid red;
 }
 
 .task-card p {
