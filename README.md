@@ -11,3 +11,4 @@
 ### Frontend setup
 
 - navigate to `index.html` and simply use `Live Server Extension` from `vscode marketplace` to start the frontend
+- front end deployed to `https://66b65c83a80f80455748a5e1--incomparable-travesseiro-29e254.netlify.app`
