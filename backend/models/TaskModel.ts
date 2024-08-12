@@ -11,6 +11,7 @@ const TaskSchema = new Schema({
     enum: ["Pending", "In Progress", "Completed"],
     default: "Pending",
   },
+  pdfContent: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   dueDate: Date,
 });

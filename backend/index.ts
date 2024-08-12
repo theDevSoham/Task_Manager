@@ -8,12 +8,10 @@ import TaskRouter from "./controller/TaskController";
 config();
 
 // include cors
-const corsOption: CorsOptions = {
-  origin: [
-    "https://66b65c83a80f80455748a5e1--incomparable-travesseiro-29e254.netlify.app",
-    "http://127.0.0.1",
-  ],
-};
+const corsOption: CorsOptions =
+  process.env.NODE_ENV === "PRODUCTION"
+    ? { origin: [process.env.HOSTED_FRONTEND as string] }
+    : { origin: ["http://127.0.0.1:5500", "http://localhost:5500"] };
 
 // initiate mongoose
 mongoose.connect(process.env.MONGODB_URI as string);

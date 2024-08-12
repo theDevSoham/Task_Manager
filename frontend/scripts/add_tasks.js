@@ -4,16 +4,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	const taskForm = document.getElementById('task-form');
 	const excelForm = document.getElementById('excel-form');
 	const fileInput = document.getElementById('excel-file');
-	const filePlaceholder = document.getElementById('file-placeholder');
+	const pdfFileInput = document.getElementById('pdf-file');
+	const excelFilePlaceholder = document.getElementById('excel-file-placeholder');
+	const pdfFilePlaceholder = document.getElementById('pdf-file-placeholder');
 
 	formRadio.addEventListener('change', toggleForms);
 	excelRadio.addEventListener('change', toggleForms);
 
 	fileInput.addEventListener('change', function () {
 		if (fileInput.files.length > 0) {
-			filePlaceholder.textContent = fileInput.files[0].name;
+			excelFilePlaceholder.textContent = fileInput.files[0].name;
 		} else {
-			filePlaceholder.textContent = "Choose Excel file...";
+			excelFilePlaceholder.textContent = "Choose Excel file...";
+		}
+	});
+
+	pdfFileInput.addEventListener('change', function () {
+		if (pdfFileInput.files.length > 0) {
+			pdfFilePlaceholder.textContent = pdfFileInput.files[0].name;
+		} else {
+			pdfFilePlaceholder.textContent = "Choose Excel file...";
 		}
 	});
 
@@ -46,7 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
 					text: 'Task form data submitted successully',
 					icon: 'success',
 					confirmButtonText: 'Go to home'
-				}).then((result) => {
+				})
+				.then((result) => {
 					if (result.isConfirmed) window.location.href = "/"
 				})
 			})
@@ -78,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
 					text: 'Task form data submitted successully',
 					icon: 'success',
 					confirmButtonText: 'Go to home'
-				}).then((result) => {
+				})
+				.then((result) => {
 					if (result.isConfirmed) window.location.href = "/"
 				})
 			})

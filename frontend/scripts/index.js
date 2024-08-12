@@ -15,6 +15,9 @@ function renderTaskList(arrayOfTasks = [], targetElement) {
 					</div>
 				</header
 				<p>${task.description.length > 20 ? `${task.description.slice(0, 21)}...` : task.description}</p>
+				<div>
+					<a href="data:application/pdf;base64,${task.pdfContent}" download="${task.title}">Download pdf</a>
+				</div>
 				<p class="status ${task.status.split(" ").join("-").toLowerCase()}">Status: ${task.status.charAt(0).toUpperCase() + task.status.slice(1)}</p>
 			</article>
 		`
@@ -73,7 +76,7 @@ function deleteTask(taskId, buttonInstance) {
 					console.log("Deleted response: ", res)
 					Swal.fire({
 						title: 'Success!',
-						text: `Task data with title ${res.id} deleted successfully`,
+						text: `Task data with title ${res.deleted_task.title} deleted successfully`,
 						icon: 'success',
 						confirmButtonText: 'Cool'
 					}).then((result) => {

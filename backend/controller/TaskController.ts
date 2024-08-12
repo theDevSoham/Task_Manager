@@ -45,20 +45,27 @@ TaskRouter.get("/task/:id", async (req, res) => {
   }
 });
 
-TaskRouter.post("/tasks", uploads.none(), async (req, res) => {
+TaskRouter.post("/tasks", uploads.single("pdf-file"), async (req, res) => {
   const taskTitle = req.body["task-title"];
   const taskDesc = req.body["task-desc"];
   const taskStatus = req.body["task-status"];
-  console.log("All data: ", taskTitle, taskDesc, taskStatus);
+  const taskPdf = req.file?.path;
+  console.log("All data: ", taskTitle, taskDesc, taskStatus, taskPdf);
 
-  if (!taskTitle || !taskDesc || !taskStatus) {
+  if (!taskTitle || !taskDesc || !taskStatus || !taskPdf) {
     return res.status(400).json({ message: "Please enter missing fields" });
   }
 
   try {
     const newIds = await createTasks([
-      { taskTitle, taskDesc, taskStatus: taskStatus as string },
+      {
+        taskTitle,
+        taskDesc,
+        taskStatus: taskStatus as string,
+        taskPdf: fs.readFileSync(taskPdf),
+      },
     ]);
+    fs.unlinkSync(taskPdf);
     res.status(200).json({ message: "New task created", id: newIds });
   } catch (error) {
     console.error("Error creating new task: ", error);
@@ -82,14 +89,11 @@ TaskRouter.post(
 
       const workbook = xlsx.readFile(pathToFile);
 
-      // Assuming data is in first sheet
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
 
-      // Convert sheet data to JSON
       const jsonData: JsonFromExcelType[] = xlsx.utils.sheet_to_json(worksheet);
 
-      // Delete the file after processing
       fs.unlinkSync(pathToFile);
 
       console.log("Extracted json: ", jsonData);
@@ -101,7 +105,9 @@ TaskRouter.post(
           taskStatus: task["Status"],
         }))
       );
-      res.status(200).json({ message: "New tasks created from excel sheet", id: newIds });
+      res
+        .status(200)
+        .json({ message: "New tasks created from excel sheet", id: newIds });
 
       res
         .status(200)
@@ -117,14 +123,15 @@ TaskRouter.post(
   }
 );
 
-TaskRouter.put("/task/:id", uploads.none(), async (req, res) => {
+TaskRouter.put("/task/:id", uploads.single("pdf-file"), async (req, res) => {
   const taskId = req.params.id; // Extract the task _id from the URL
   const taskTitle = req.body["task-title"];
   const taskDesc = req.body["task-desc"];
   const newStatus = req.body["task-status"];
-  console.log("All data: ", taskTitle, taskDesc, newStatus);
+  const newPdf = req.file?.path;
+  console.log("All data: ", taskTitle, taskDesc, newStatus, newPdf);
 
-  if (!taskId || (!taskTitle && !taskDesc && !newStatus))
+  if (!taskId || (!taskTitle && !taskDesc && !newStatus && !newPdf))
     return res
       .status(400)
       .json({ message: "Need id and atleast one param to perform update" });
@@ -136,6 +143,11 @@ TaskRouter.put("/task/:id", uploads.none(), async (req, res) => {
         title: taskTitle,
         description: taskDesc,
         status: statusObject[newStatus as string],
+        ...(newPdf
+          ? {
+              pdfContent: fs.readFileSync(newPdf as string).toString("base64"),
+            }
+          : {}),
       },
       { new: true }
     );

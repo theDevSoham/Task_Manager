@@ -1,10 +1,12 @@
 import Task from "../../models/TaskModel";
+import fs from "node:fs";
 import { statusObject } from "../Static";
 
 type TaskType = {
   taskTitle: string;
   taskDesc: string;
   taskStatus: string;
+  taskPdf?: Buffer;
 };
 
 export const createTasks = async (tasks: TaskType[]) => {
@@ -14,6 +16,11 @@ export const createTasks = async (tasks: TaskType[]) => {
         title: task.taskTitle,
         description: task.taskDesc,
         status: statusObject[task.taskStatus],
+        ...(task.taskPdf
+          ? {
+              pdfContent: task.taskPdf.toString("base64"),
+            }
+          : {}),
       }))
     );
 

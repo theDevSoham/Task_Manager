@@ -63,6 +63,21 @@ document.addEventListener('DOMContentLoaded', function () {
 							</textarea>
 						</div>
 
+						<div class="form-group custom-file-upload">
+							<label for="pdf-file">Upload New PDF (optional):</label>
+							<div class="file-input-wrapper">
+							<input
+								type="file"
+								id="pdf-file"
+								name="pdf-file"
+								accept=".pdf"
+							/>
+							<span id="pdf-file-placeholder" class="file-placeholder"
+								>Choose PDF file...</span
+							>
+							</div>
+						</div>
+
 						<div class="form-group">
 							<label for="task-status">Status:</label>
 							<select id="task-status" name="task-status" required>

@@ -154,6 +154,24 @@ main {
   margin: 10px 0;
 }
 
+.task-card div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.task-card div a {
+  text-decoration: none;
+  color: #0056b3;
+  font-family: "Mulish", sans-serif;
+}
+
+.task-card div a:hover {
+  text-decoration: underline;
+}
+
 .task-card:hover {
   box-shadow: none;
   background-color: #d6d6d6;
