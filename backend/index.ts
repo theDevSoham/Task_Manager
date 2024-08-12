@@ -9,7 +9,10 @@ config();
 
 // include cors
 const corsOption: CorsOptions = {
-  origin: ["https://taskmanager-production-0377.up.railway.app"],
+  origin: [
+    "https://66b65c83a80f80455748a5e1--incomparable-travesseiro-29e254.netlify.app",
+    "http://127.0.0.1",
+  ],
 };
 
 // initiate mongoose
